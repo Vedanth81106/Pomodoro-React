@@ -30,19 +30,19 @@ To run this project locally:
 
 #### Clone the repository:
 
-git clone [https://github.com/Vedanth81106/Pomodoro-React.git](https://github.com/Vedanth81106/Pomodoro-React.git)
+`git clone [https://github.com/Vedanth81106/Pomodoro-React.git](https://github.com/Vedanth81106/Pomodoro-React.git)`
 
 #### Navigate to the project directory:
 
-cd Pomodoro-React
+`cd Pomodoro-React`
 
 #### Install the dependencies:
 
-npm install
+`npm install`
 
 #### Start the development server:
 
-npm run dev
+`npm run dev`
 
 The app will be available at http://localhost:5173.
 
