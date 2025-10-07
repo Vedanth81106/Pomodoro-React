@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: "Nata Sans", sans-serif;
+    font-weight: 250;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    width: 100%;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.25);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.control-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+.control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.clock {
+    font-size: 7rem;
+    color: #a3b18a;
+    padding: 10px 20px;
+    margin-top: -20px;
+}
+
+.dropdown-wrapper {
+    position: relative;
+}
+
+.selected-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #aec1789c;
+    font-size: 25px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.selected-option:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.selected-option img {
+    width: 24px;
+    height: 24px;
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.option {
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 12px 20px;
+    font-size: 20px;
+    font-family: "Nata Sans", sans-serif;
+    color: #31572cde;
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
