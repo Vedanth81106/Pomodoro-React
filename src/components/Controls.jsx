@@ -1,6 +1,7 @@
-import playIconUrl from '../assets/playButton.svg';
-import pauseIconUrl from '../assets/pauseButton.svg';
-import resetIconUrl from '../assets/resetButton.svg';
+import playIconUrl from '../assets/images/playButton.svg';
+import pauseIconUrl from '../assets/images/pauseButton.svg';
+import resetIconUrl from '../assets/images/resetButton.svg';
+import settingsIconUrl from '../assets/images/settingsIcon.svg'
 
 export default function Controls(props){
 
@@ -17,6 +18,10 @@ export default function Controls(props){
 
                 <button onClick={props.resetTimer} className="control-btn" title="Reset">
                     <img src={resetIconUrl} alt="reset"/>
+                </button>
+
+                <button onClick={props.toggleSettings} className="control-btn" title="Settings">
+                    <img src={settingsIconUrl} alt="settings"/>
                 </button>
             </div>
     )

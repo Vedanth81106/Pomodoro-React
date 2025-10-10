@@ -1,112 +1,141 @@
-body {
-    margin: 0;
-    font-family: "Nata Sans", sans-serif;
-    font-weight: 250;
+/* === Base Theme Variables (Forest – Default) === */
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #b5c99a;
+  --accent-color: #cce3b2;
+  --option-hover-bg: rgba(255, 255, 255, 0.15);
+  --option-hover-color: #e6ffb3;
+  --button-bg: rgba(255, 255, 255, 0.2);
+  --button-hover-bg: rgba(255, 255, 255, 0.35);
+  --dropdown-bg: rgba(0, 0, 0, 0.3);
+  --selected-bg: rgba(255, 255, 255, 0.15);
+  --selected-hover-bg: rgba(255, 255, 255, 0.3);
 }
 
+/* === Global Reset & Typography === */
+body { 
+  margin: 0;
+  font-family: "Nata Sans", sans-serif;
+  font-weight: 250;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* === Layout Container === */
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  text-align: center;
 }
 
+/* === Timer Controls === */
 .timer-controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
+/* === Buttons === */
 .control-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, 0.25);
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.25s ease, transform 0.15s ease;
 }
 
 .control-btn img {
-    width: 30px;
-    height: 30px;
+  width: 28px;
+  height: 28px;
 }
 
 .control-btn:hover {
-    background-color: rgba(255, 255, 255, 0.4);
+  background-color: var(--button-hover-bg);
+  transform: translateY(-2px);
 }
 
+/* === Clock Display === */
 .clock {
-    font-size: 7rem;
-    color: #a3b18a;
-    padding: 10px 20px;
-    margin-top: -20px;
+  font-size: 7rem;
+  color: var(--text-color);
+  margin-top: -10px;
+  letter-spacing: 2px;
 }
 
+/* === Dropdown Menu === */
 .dropdown-wrapper {
-    position: relative;
+  position: relative;
 }
 
 .selected-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 200px;
-    padding: 10px 20px;
-    border-radius: 15px;
-    backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #aec1789c;
-    font-size: 25px;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 275px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 22px;
+  color: var(--accent-color);
+  background-color: var(--selected-bg);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background-color 0.25s ease;
 }
 
 .selected-option:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--selected-hover-bg);
 }
 
 .selected-option img {
-    width: 24px;
-    height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .options-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
-    margin-top: 5px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    z-index: 10;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 10px;
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  z-index: 10;
+  animation: fadeIn 0.2s ease;
 }
 
+/* === Dropdown Options === */
 .option {
-    width: 100%;
-    border: none;
-    margin: 0;
-    padding: 12px 20px;
-    font-size: 20px;
-    font-family: "Nata Sans", sans-serif;
-    color: #31572cde;
-    cursor: pointer;
-    text-align: center;
-    background-color: transparent;
-    transition: background-color 0.2s;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 18px;
+  color: var(--accent-color);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .option:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--option-hover-bg);
+  color: var(--option-hover-color);
 }
 
+/* === Animations === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

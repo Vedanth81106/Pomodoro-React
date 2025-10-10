@@ -1,12 +1,11 @@
-    import { useState } from "react";
-    import { useEffect } from "react";
-    import { useRef } from "react";
+    import { useState,useEffect,useRef } from "react";
 
     import Controls from "./components/Controls";
     import Clock from "./components/Clock";
     import DropDown from "./components/Dropdown";
-    import backgroundImage from './assets/background.jpg';
+    import Settings from "./components/Settings/Settings";
 
+    import backgroundImage from './assets/images/background.jpg';
     import breakSoundUrl from './assets/audio/breakEndBell.mp3';
     import pomoSoundUrl from './assets/audio/pomoEndBell.mp3';
 
@@ -17,6 +16,10 @@
         const [mode,setMode] = useState("pomo");
         const [dropdownState,setDropdownState] = useState(false);
         const [endTime,setEndTime] = useState(null);
+        const [settingsMenu,setSettingsMenu] = useState(false);
+
+        const durations = {pomo : 25, short: 5, long: 15};
+        const [duration,setDuration] = useState(durations);
 
         const breakSoundRef = useRef(null);
         const pomoSoundRef = useRef(null);
@@ -31,6 +34,7 @@
                         if(newTimeLeft <= 0){
                             setIsRunning(false);
                             setTimeLeft(0);
+                            showNotification();
 
                             mode === "pomo" ? pomoSoundRef.current.play() : breakSoundRef.current.play();
                         }else{
@@ -43,6 +47,12 @@
                 return () => clearInterval(timer);
             }
         },[isRunning, mode, endTime]);
+
+        useEffect(() => {
+
+            setIsRunning(false);
+            setTimeLeft(duration[mode]*60*1000);            
+        },[duration])
 
         //spacebar pause/play
 
@@ -65,6 +75,15 @@
             return () => window.removeEventListener('keydown', spacebarEventListener);
 
         },[isRunning])
+
+        function showNotification(){
+
+            const bodyText = mode === "pomo" ? "Time for a break!" : "Time to get back to work!"
+
+            if(Notification.permission === 'granted'){
+                return new Notification("Pomodoro",{body : bodyText});
+            }
+        }
 
         function startTimer(){
 
@@ -97,25 +116,17 @@
         function changeMode(input){
             
             setMode(input);
-            switch(input){
-
-                case "pomo": 
-                    setTimeLeft(25*60*1000);
-                    break;
-                
-                case "short" :
-                    setTimeLeft(5*60*1000);
-                    break;
-
-                case "long" :
-                    setTimeLeft(15*60*1000);
-                    break;
-            }
+            setTimeLeft(duration[input]*60*1000);
         }
 
         function toggleDropdown(){
 
             setDropdownState(prevDropDownState => !prevDropDownState)
+        }
+
+        function toggleSettings(){
+
+            setSettingsMenu(prevSettingsMenu => !prevSettingsMenu)
         }
 
         const styles = {
@@ -130,21 +141,31 @@
 
         return(
             <div style={styles} className="container">
+                {!settingsMenu ? (
+                <>  
+                
+                    <Controls startTimer = {startTimer} stopTimer = {stopTimer} resetTimer = {resetTimer} toggleSettings={toggleSettings}/>
 
+                    <Clock timeLeft={timeLeft}/>
+
+                    <DropDown 
+                        toggleDropdown={toggleDropdown} 
+                        mode={mode} 
+                        changeMode={changeMode}
+                        dropdownState={dropdownState}
+                    />
+
+                </>
+                ): (
+                <Settings 
+                    durations = {duration} 
+                    toggleSettings={toggleSettings}
+                    setDuration = {setDuration}
+                />
+                )}
                 <audio ref={breakSoundRef} src={breakSoundUrl} />
                 <audio ref={pomoSoundRef} src={pomoSoundUrl} />
 
-                <Controls startTimer = {startTimer} stopTimer = {stopTimer} resetTimer = {resetTimer}/>
-
-                <Clock timeLeft={timeLeft}/>
-
-                <DropDown 
-                    toggleDropdown={toggleDropdown} 
-                    mode={mode} 
-                    changeMode={changeMode}
-                    dropdownState={dropdownState}
-                />
-                
             </div>
         )
     }
