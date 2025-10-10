@@ -1,4 +1,4 @@
-import downArrowUrl from '../assets/downArrow.svg';
+import downArrowUrl from '../assets/images/downArrow.svg';
 
 export default function DropDown(props){
 
