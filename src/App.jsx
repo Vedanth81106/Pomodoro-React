@@ -11,12 +11,19 @@
 
     export default function App(){
 
+        const styles = {
+            background: `url(${backgroundImage}) center/cover fixed no-repeat`
+            };
+
         const [timeLeft,setTimeLeft] = useState(25*60*1000);
         const [isRunning, setIsRunning] = useState(false);
         const [mode,setMode] = useState("pomo");
         const [dropdownState,setDropdownState] = useState(false);
         const [endTime,setEndTime] = useState(null);
         const [settingsMenu,setSettingsMenu] = useState(false);
+        const [timerAuto,setTimerAuto] = useState(false);
+        const [pomosNeeded,setPomosNeeded] = useState(3);
+        const [pomosDone,setPomosDone] = useState(0);
 
         const durations = {pomo : 25, short: 5, long: 15};
         const [duration,setDuration] = useState(durations);
@@ -31,28 +38,45 @@
 
                         const newTimeLeft = endTime - Date.now();
 
-                        if(newTimeLeft <= 0){
-                            setIsRunning(false);
-                            setTimeLeft(0);
-                            showNotification();
+                            if(newTimeLeft <= 0){
+                                setTimeLeft(0);
+                                showNotification();
 
-                            mode === "pomo" ? pomoSoundRef.current.play() : breakSoundRef.current.play();
-                        }else{
-                            setTimeLeft(newTimeLeft);
-                        }
+                                mode === "pomo" ? pomoSoundRef.current.play() : breakSoundRef.current.play();
 
+                                if(!timerAuto){
+                                    setIsRunning(false);
+                                }else{
+                                    if(mode === "pomo"){
+                                        const newPomosDone = pomosDone + 1;
+                                        const nextMode = newPomosDone < pomosNeeded ? "short" : "long";
+
+                                        changeMode(nextMode);
+                                        setEndTime(Date.now() + duration[nextMode] * 60 * 1000)
+                                    }else if(mode === "short"){
+                                        setEndTime(Date.now() + duration['pomo'] * 60 * 1000)
+                                    }else if(mode === "long"){
+                                        changeMode("pomo");
+                                        setPomosDone(0);
+                                        setEndTime(Date.now() + duration['pomo'] * 60 * 1000)
+                                    }
+                                }
+                            }else{
+                                setTimeLeft(newTimeLeft);
+                            }
+                        
                 },1000);
 
                 //only runs if isRunning becomes false.
                 return () => clearInterval(timer);
             }
-        },[isRunning, mode, endTime]);
+        },[isRunning, mode, endTime, pomosDone, timerAuto, duration, pomosNeeded]);
 
         useEffect(() => {
 
             setIsRunning(false);
             setTimeLeft(duration[mode]*60*1000);            
-        },[duration])
+        },[duration,mode])
 
         //spacebar pause/play
 
@@ -74,16 +98,13 @@
             window.addEventListener('keydown',spacebarEventListener);
             return () => window.removeEventListener('keydown', spacebarEventListener);
 
-        },[isRunning])
+        },[])
 
-        function showNotification(){
-
-            const bodyText = mode === "pomo" ? "Time for a break!" : "Time to get back to work!"
-
-            if(Notification.permission === 'granted'){
-                return new Notification("Pomodoro",{body : bodyText});
+        function showNotification() {
+            if (Notification.permission !== 'granted') return;
+            const bodyText = mode === "pomo" ? "Time for a break!" : "Time to get back to work!";
+            new Notification("Pomodoro", { body: bodyText });
             }
-        }
 
         function startTimer(){
 
@@ -97,7 +118,7 @@
             }
         }
 
-        function stopTimer(){
+        function pauseTimer(){
 
             if(isRunning){
                 setIsRunning(false);
@@ -107,9 +128,7 @@
 
         function resetTimer(){
 
-            if(isRunning){
-                setIsRunning(false);
-            }
+            setIsRunning(false);
             changeMode(mode);       
         }
 
@@ -129,14 +148,6 @@
             setSettingsMenu(prevSettingsMenu => !prevSettingsMenu)
         }
 
-        const styles = {
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundAttachment: 'fixed'
-        };
-
         ////We use () => ... instead of {changeMode("pomo")} directly because the direct calling will make it so that REact renders it immediately when the component loads. Doing () => makes it such that it only loads when its needed later.
 
         return(
@@ -144,7 +155,7 @@
                 {!settingsMenu ? (
                 <>  
                 
-                    <Controls startTimer = {startTimer} stopTimer = {stopTimer} resetTimer = {resetTimer} toggleSettings={toggleSettings}/>
+                    <Controls startTimer = {startTimer} pauseTimer = {pauseTimer} resetTimer = {resetTimer} toggleSettings={toggleSettings}/>
 
                     <Clock timeLeft={timeLeft}/>
 
@@ -161,6 +172,10 @@
                     durations = {duration} 
                     toggleSettings={toggleSettings}
                     setDuration = {setDuration}
+                    timerAuto={timerAuto}
+                    setTimerAuto={setTimerAuto}
+                    pomosNeeded={pomosNeeded}
+                    setPomosNeeded={setPomosNeeded}
                 />
                 )}
                 <audio ref={breakSoundRef} src={breakSoundUrl} />
