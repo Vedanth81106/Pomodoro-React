@@ -12,7 +12,7 @@ export default function Controls(props){
                     <img src={playIconUrl} alt="play"/>
                 </button>
 
-                <button onClick={props.stopTimer} className="control-btn" title="Pause">
+                <button onClick={props.pauseTimer} className="control-btn" title="Pause">
                     <img src={pauseIconUrl} alt="pause"/>
                 </button>
 
