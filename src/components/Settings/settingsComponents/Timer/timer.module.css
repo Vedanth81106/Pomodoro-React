@@ -1,0 +1,117 @@
+.inputGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.inputGroup:hover {
+    background-color: var(--option-hover-bg);
+}
+
+.inputGroup label {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-family: "Nata Sans", sans-serif;
+}
+
+.inputGroup input {
+    width: 60px;
+    height: 30px;
+    background-color: var(--button-bg);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--accent-color);
+    text-align: center;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s ease;
+    font-family: "Nata Sans", sans-serif;
+}
+
+.inputGroup input:focus {
+    border-color: var(--accent-color);
+    background-color: var(--button-hover-bg);
+}
+
+.inputGroup input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.inputGroup input[type="number"]::-webkit-outer-spin-button,
+.inputGroup input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+     margin: 0;
+}
+
+.autoStartSection {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--button-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: opacity 0.3s ease;
+}
+
+.autoStartSection.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.toggleSwitch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggleSwitch label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1rem;
+    color: var(--text-color);
+    cursor: pointer;
+    font-family: "Nata Sans", sans-serif;
+}
+
+.toggleSwitch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background-color: var(--button-bg);
+    border-radius: 28px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .slider:before {
+    transform: translateX(22px);
+}

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useTheme } from "./settingsComponents/ThemesFolder/ThemeContext.jsx";
-import Timer from "./settingsComponents/TimerFolder/Timer.jsx";
-import Themes from "./settingsComponents/ThemesFolder/Themes.jsx";
+import { useTheme } from "./settingsComponents/Themes/ThemeContext.jsx";
+
+import Timer from "./settingsComponents/Timer/Timer.jsx";
+import Themes from "./settingsComponents/Themes/Themes.jsx";
+import Account from "./settingsComponents/Account/Account.jsx"
 
 import accountIconUrl from "../../assets/images/accountIcon.svg";
 import galleryIconUrl from "../../assets/images/galleryIcon.svg";
@@ -55,6 +57,22 @@ export default function Settings(props) {
         };
     }, [props.toggleSettings]);
 
+    const contentMap = {
+        timers: <Timer
+                    localDuration={localDuration}
+                    setLocalDuration={setLocalDuration}
+                    timerAuto={props.timerAuto}
+                    setTimerAuto={props.setTimerAuto}
+                    setPomosNeeded={props.setPomosNeeded}
+                    pomosNeeded={props.pomosNeeded}
+                />,
+        themes: <Themes 
+                    localTheme={localTheme}
+                    setLocalTheme={setLocalTheme}
+                />,
+        account: <Account />
+    }
+
     return (
         <div className={styles.settingsContainer}>
             <div ref={settingsRef} className={styles.settingsWindow}>
@@ -75,29 +93,18 @@ export default function Settings(props) {
                         <img src={galleryIconUrl} alt="Themes" />
                     </button>
 
+                    <button 
+                        onClick={() => setCurrentContent("account")} 
+                        className={`${styles.menuIcons} ${currentContent === 'account' ? styles.active : ''}`} 
+                        title="Account"
+                    >
+                        <img src={accountIconUrl} alt="Account" />
+                    </button>
+
                 </div>
 
                 <div className={styles.menuContent}>
-                    {currentContent === "timers" && (
-                        <Timer
-                            localDuration={localDuration}
-                            setLocalDuration={setLocalDuration}
-                            timerAuto={props.timerAuto}
-                            setTimerAuto={props.setTimerAuto}
-                            setPomosNeeded={props.setPomosNeeded}
-                            pomosNeeded={props.pomosNeeded}
-                        />
-                    )}
-
-                    {currentContent === "themes" && (
-                        <Themes 
-                            localTheme={localTheme}
-                            setLocalTheme={setLocalTheme}
-                        />
-                    )}
-
-
-                    
+                    {contentMap[currentContent]}
                 </div>
 
                 <div className={styles.settingsButtons}>

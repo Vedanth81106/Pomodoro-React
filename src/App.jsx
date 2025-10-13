@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { ThemeProvider } from "./components/Settings/settingsComponents/ThemesFolder/ThemeContext";
+import { useState, useEffect, useRef,useCallback } from "react";
+import { ThemeProvider } from "./components/Settings/settingsComponents/Themes/ThemeContext";
 
 import Controls from "./components/Controls";
 import Clock from "./components/Clock";
@@ -54,12 +54,12 @@ export default function App() {
         const newTimeLeft = endTime - Date.now();
         
         if (newTimeLeft <= 0) {
-            setTimeLeft(0);
             showNotification();
+            setTimeLeft(duration[mode]*60*1000);
             mode === "pomo" ? pomoSoundRef.current?.play() : breakSoundRef.current?.play();
 
             if (!timerAuto) {
-                setIsRunning(false);
+                resetTimer();
             } else {
                 handleAutoTransition();
             }
@@ -127,9 +127,9 @@ export default function App() {
         setDropdownState((prev) => !prev);
     }
 
-    function toggleSettings() {
+    const toggleSettings = useCallback(() => {
         setSettingsMenu((prev) => !prev);
-    }
+    },[]) // Empty dependency array means it will never be recreated.
 
     return (
         <ThemeProvider>
