@@ -1,0 +1,39 @@
+import { useTheme } from "./ThemeContext";
+import styles from "./themes.module.css";
+
+export default function Themes(props) {
+    const { themes } = useTheme();
+
+    return (
+        <div className={styles.themesContainer}>
+
+            <button 
+                onClick={() => props.setLocalTheme("forest")} 
+                className={`${styles.themeButton} ${props.localTheme === "forest" ? styles.active : ""}`}
+            >
+                Forest
+            </button>
+
+            <button 
+                onClick={() => props.setLocalTheme("ocean")} 
+                className={`${styles.themeButton} ${props.localTheme === "ocean" ? styles.active : ""}`}
+            >
+                Ocean
+            </button>
+
+            <button 
+                onClick={() => props.setLocalTheme("neon")} 
+                className={`${styles.themeButton} ${props.localTheme === "neon" ? styles.active : ""}`}
+            >
+                Neon
+            </button>
+
+            <button 
+                onClick={() => props.setLocalTheme("flowers")} 
+                className={`${styles.themeButton} ${props.localTheme === "flowers" ? styles.active : ""}`}
+            >
+                Flowers
+            </button>
+        </div>
+    );
+}

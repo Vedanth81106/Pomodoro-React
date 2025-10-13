@@ -1,7 +1,7 @@
 import playIconUrl from '../assets/images/playButton.svg';
 import pauseIconUrl from '../assets/images/pauseButton.svg';
 import resetIconUrl from '../assets/images/resetButton.svg';
-import settingsIconUrl from '../assets/images/settingsIcon.svg'
+import menuIconUrl from '../assets/images/menuIcon.svg'
 
 export default function Controls(props){
 
@@ -20,8 +20,8 @@ export default function Controls(props){
                     <img src={resetIconUrl} alt="reset"/>
                 </button>
 
-                <button onClick={props.toggleSettings} className="control-btn" title="Settings">
-                    <img src={settingsIconUrl} alt="settings"/>
+                <button onClick={props.toggleSettings} className="control-btn" title="Menu">
+                    <img src={menuIconUrl} alt="menu"/>
                 </button>
             </div>
     )

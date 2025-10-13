@@ -1,0 +1,113 @@
+/* === Input groups for durations === */
+.inputGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 12px 15px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.inputGroup:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.inputGroup label {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+.inputGroup input {
+  width: 60px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #53b593;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+
+/* === Auto-start section container === */
+.autoStartSection {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.3s ease;
+}
+
+.autoStartSection.disabled {
+  opacity: 0.6;
+}
+
+.autoStartSection.disabled .inputGroup {
+  pointer-events: none;
+}
+
+
+/* === Toggle switch === */
+.toggleSwitch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleSwitch label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 1rem;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+.toggleSwitch input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  background-color: #333;
+  border-radius: 28px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .slider {
+  background-color: #53b593;
+}
+
+.toggleSwitch input[type="checkbox"]:checked + .slider:before {
+  transform: translateX(22px);
+}
+
